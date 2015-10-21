@@ -666,7 +666,7 @@ bdaddr_t *strtoba(const char *str)
 // ignore the "." and ".." entries
 static int dir_filter(const struct dirent *name)
 {
-    if (0 == strncmp("kim.", name->d_name, 4))
+    if (0 == strncmp("kim", name->d_name, 3))
             return 1;
 
     return 0;
@@ -702,7 +702,7 @@ int main(int argc, char *argv[])
 		return -1;
 	}
 
-	n = scandir("/sys/devices", &namelist, dir_filter, alphasort);
+	n = scandir("/sys/devices/platform/", &namelist, dir_filter, alphasort);
 
 	if (n == -1) {
 		ALOGE("Found zero kim devices:%s", strerror(errno));
@@ -718,10 +718,10 @@ int main(int argc, char *argv[])
 	}
 
 	UIM_DBG("kim sysfs name: %s", namelist[0]->d_name);
-	snprintf(INSTALL_SYSFS_ENTRY, UIM_SYSFS_SIZE, "/sys/devices/%s/install", namelist[0]->d_name);
-	snprintf(DEV_NAME_SYSFS, UIM_SYSFS_SIZE, "/sys/devices/%s/dev_name", namelist[0]->d_name);
-	snprintf(BAUD_RATE_SYSFS, UIM_SYSFS_SIZE, "/sys/devices/%s/baud_rate", namelist[0]->d_name);
-	snprintf(FLOW_CTRL_SYSFS, UIM_SYSFS_SIZE, "/sys/devices/%s/flow_cntrl", namelist[0]->d_name);
+	snprintf(INSTALL_SYSFS_ENTRY, UIM_SYSFS_SIZE, "/sys/devices/platform/%s/install", namelist[0]->d_name);
+	snprintf(DEV_NAME_SYSFS, UIM_SYSFS_SIZE, "/sys/devices/platform/%s/dev_name", namelist[0]->d_name);
+	snprintf(BAUD_RATE_SYSFS, UIM_SYSFS_SIZE, "/sys/devices/platform/%s/baud_rate", namelist[0]->d_name);
+	snprintf(FLOW_CTRL_SYSFS, UIM_SYSFS_SIZE, "/sys/devices/platform/%s/flow_cntrl", namelist[0]->d_name);
 
 	free(namelist[0]);
 	free(namelist);
